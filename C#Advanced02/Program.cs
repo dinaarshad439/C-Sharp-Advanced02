@@ -54,9 +54,24 @@ namespace C_Advanced02
 
             #endregion
 
-            
+            #region Task3 Custom Report Generator
 
-            
+            #region Task3.1 Print Reports
+
+            Console.WriteLine("\n----------Short Report---------------\n");
+            var ShortReport = PrintReport(catalog, p => Console.WriteLine($"{p.Name} - ${p.Price}"));
+
+            Console.WriteLine("\n----------Detailed Report---------------\n");
+            var DetailedReport = PrintReport(catalog, p => Console.WriteLine($"[{p.Category}] {p.Name}| Price: ${p.Price}| Stock:{p.Stock}"));
+
+            #endregion
+
+
+            #endregion
+
+
+
+
         }
 
         /// <summary>
@@ -75,7 +90,23 @@ namespace C_Advanced02
             return products;
         }
 
+        /// <summary>
+        /// Delegate Used: Action<Product>
+        /// Why: Action represents a method that takes an input and returns void. It is perfect 
+        /// for performing an operation on each item (like printing reports) without returning data.
+        /// </summary>
+        public static List<Product> PrintReport(List<Product> list, Action<Product> action)
+        {
+            List<Product> products = new List<Product>();
 
-        
+            foreach (Product product in list)
+            {
+                action(product);
+            }
+            return products;
+        }
+
+
+
     }
 }
