@@ -66,6 +66,21 @@ namespace C_Advanced02
 
             #endregion
 
+            #region Task3.2 Transform Products 
+
+            Console.WriteLine("\n--------- Summary List---------\n");
+            var SummaryList = TransformProducts(catalog, p => $"{p.Name} (${p.Price})");
+            foreach (var product in SummaryList) Console.WriteLine(product);
+
+            Console.WriteLine("\n--------- Price Labels---------\n");
+            var PriceLabel = TransformProducts(catalog, p => p.Price > 100 ? "Expensive!" : "Affordable");
+            for (int i = 0; i < catalog.Count; i++)
+            {
+                Console.WriteLine($"{catalog[i].Name}: {PriceLabel[i]}");
+            }
+
+            #endregion
+
 
             #endregion
 
@@ -106,6 +121,21 @@ namespace C_Advanced02
             return products;
         }
 
+        /// <summary>
+        /// Delegate Used: Func<Product, T>
+        /// Why: Func allows transforming or mapping a Product object into another data type T 
+        /// (such as converting a product into a formatted string summary or a price label).
+        /// </summary>
+        public static List<T> TransformProducts<T>(List<Product> list, Func<Product, T> filter)
+        {
+            List<T> products = new List<T>();
+
+            foreach (Product product in list)
+            {
+                products.Add(filter(product));
+            }
+            return products;
+        }
 
 
     }
