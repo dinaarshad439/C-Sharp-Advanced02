@@ -54,6 +54,7 @@ namespace C_Advanced02
 
             #endregion
 
+
             #region Task3 Custom Report Generator
 
             #region Task3.1 Print Reports
@@ -80,6 +81,18 @@ namespace C_Advanced02
             }
 
             #endregion
+
+            #region Task3.3 Filter Products  
+
+            Console.WriteLine("\n---------- Low-Stock Alert--------\n");
+            var LowStockAlert = FilterProducts(catalog, p => p.Stock < 20);
+            foreach (var p in LowStockAlert)
+            {
+                Console.WriteLine($"[LOW STOCK] {p.Name}: only {p.Stock} left!");
+            }
+
+            #endregion
+
 
 
             #endregion
@@ -137,6 +150,19 @@ namespace C_Advanced02
             return products;
         }
 
-
+        /// <summary>
+        /// Delegate Used: Predicate<Product>
+        /// Why: Predicate is a specialized delegate that evaluates a condition on an object 
+        /// and returns a boolean, specifically built for matching conditions and filtering collections.
+        /// </summary>
+        public static List<Product> FilterProducts(List<Product> list, Predicate<Product> filter)
+        {
+            List<Product> products = new List<Product>();
+            foreach (Product product in list)
+            {
+                if (filter(product)) products.Add(product);
+            }
+            return products;
+        }
     }
 }
